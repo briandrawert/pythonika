@@ -3,7 +3,8 @@
 # (The paths should not contain whitespaces)
 
 #MLINKDIR = ./mathematica/AddOns/MathLink/DeveloperKit
-MLINKDIR = /Applications/Mathematica.app/SystemFiles/Links/MathLink/DeveloperKit
+MATHEMATICA_DIR = /Applications/Mathematica.app/
+MLINKDIR = ${MATHEMATICA_DIR}SystemFiles/Links/MathLink/DeveloperKit
 
 #SYS = MacOSX-x86
 SYS = MacOSX-x86-64
@@ -13,9 +14,9 @@ INCDIR = ${CADDSDIR}
 LIBDIR = ${CADDSDIR}
 INSTALL_DIR = '/usr/local/bin'
 
-# Modify the following for Python versions other than 2.6
+# Modify the following for Python versions other than 2.7
 PYTHON_VERSION_MAJOR = 2
-PYTHON_VERSION_MINOR = 6
+PYTHON_VERSION_MINOR = 7
 
 
 
@@ -63,8 +64,12 @@ ${PYTHONIKA}tm.o: ${PYTHONIKA}.tm
 ${PYTHONIKA}.o: ${PYTHONIKA}.c
 	${CC} ${OPTS} -c ${PYTHONIKA}.c ${INCLUDES}
 
+#install:
+#	cp ${PYTHONIKA} ${INSTALL_DIR}
+#
 install:
-	cp ${PYTHONIKA} ${INSTALL_DIR}
+	cp ${PYTHONIKA} ${MATHEMATICA_DIR}/Contents/MacOS/${PYTHONIKA}
+	ln -s ${INSTALL_DIR}${PYTHONIKA} ${MATHEMATICA_DIR}/Contents/MacOS/${PYTHONIKA}
 
 clean :
 	rm -f ${PYTHONIKA}tm.* ${PYTHONIKA}.o ${PYTHONIKA}
